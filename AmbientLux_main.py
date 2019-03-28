@@ -4,25 +4,16 @@ import os, sys
 
 #Name:bugreportCut
 #Description:去除多余的log信息，保留和调光相关的内容
-def bugreportCut(bugreport):   
-   inPutFile = open(bugreport, encoding='utf-8')
-   outPutFile = open(bugreport +'_result.txt', 'w')
-   print('Create'+ bugreport + '_result.txt success\n')
-   print('Start to read lines...\n')
-   lines = inPutFile.readlines()
+def bugreportCut(bugreport):
+   #添加文件   
+   with open(bugreport, encoding='utf-8') as inPutFile:
+      lines = inPutFile.readlines()
+   #开始按行处理
    for line in lines:
+	  #如果含有自动调光关键信息，执行以下代码
       if "D AutomaticBrightnessController" in line:
-	item = [line.count(" "), line.lstrip()]
-	if lastTemp == []:lastTemp = item
-		if item[0] > lastTemp[0]:
-			
-		
-        outPutFile.write(line)
-		 
-   inPutFile.close()
-   outPutFile.close()
-         
-
+         lineList = line.split(" ")
+	 print(lineList)
 #-----主程序入口-----
 #获取当前目录路径
 dirPath = os.path.dirname(os.path.abspath(__file__))
@@ -32,6 +23,8 @@ del dirs[0]
 #开始处理bugreport
 for file in dirs:
    #去除多余的log信息，保留和调光相关的内容
-   bugreportCut(file) 
+   bugreportCut(file)
+inPutFile.close()
+outPutFile.close()
 
 
