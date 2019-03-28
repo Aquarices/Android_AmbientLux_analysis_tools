@@ -12,7 +12,7 @@ del dirs[0]
 outPutFile = open('result.txt','w')
 #添加文件   
 for file in dirs:
-   #去除多余的log信息，保留和调光相关的内容
+   #去除多余的log信息，初步保留和调光相关的内容
    inPutFile = open(file, encoding='utf-8')
    lines = inPutFile.readlines()
    #开始按行处理
@@ -21,8 +21,9 @@ for file in dirs:
       if "D AutomaticBrightnessController" in line:
          lineList = line.split()
          del lineList[0]
-         del lineList[1]
-         line = '='.join(lineList)
+         for i in range(1,6):
+            del lineList[1]
+         line = '  '.join(lineList)
          print(line)
          outPutFile.write(line)
          outPutFile.write('\n')
